@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, Picker, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TextInput } from 'react-native';
 import DatePicker from 'react-native-datepicker'
-
-import Divider from 'react-native-divider';
+import { Dropdown } from 'react-native-material-dropdown';
 
 
 export default function Section1() {
@@ -14,6 +13,7 @@ export default function Section1() {
 
     const [Statutmatrimonial, setStatutmatrimonial] = useState('');
     const [autreStatutmatrimonial, setautreStatutmatrimonial] = useState('');
+    const [NbEnfants, setNbEnfants] = useState('');
 
     const onChange = (event, selectedDate) => {
         setShow(false)
@@ -21,6 +21,9 @@ export default function Section1() {
         const currentDatee = currentDate.toDateString();
         setdateaniv(currentDatee)
     };
+
+    let sexechoices = [{ value: 'Homme', }, { value: 'Femme', }];
+    let statutchoices = [{ value: 'Célibataire', }, { value: 'Marié', }, { value: 'Divorcé(e)', }, { value: 'Veuf(ve)', }, { value: 'Non précisée', }];
 
 
     return (
@@ -45,33 +48,29 @@ export default function Section1() {
 
             <View style={styles.zone}>
                 <Text style={styles.zoneText}>Sexe :</Text>
-                <Picker
-                    selectedValue={sexe}
-                    style={styles.picker}
-                    onValueChange={(itemValue, itemIndex) =>
-                        setsexe(itemValue)
-                    }>
-                    <Picker.Item label="Homme" value="Homme" />
-                    <Picker.Item label="Femme" value="Femme" />
-                </Picker>
+                <Dropdown
+                    value={'Cliquez ici...'}
+                    containerStyle={styles.dropdowncontainer}
+                    style={styles.dropdown}
+                    data={sexechoices}
+                    selectedItem={sexe}
+                    baseColor='#ecf0f1'
+                />
             </View>
 
             <View style={styles.zone}>
                 <Text style={styles.zoneText}>Statut matrimonial :</Text>
-                <Picker
-                    selectedValue={Statutmatrimonial}
-                    style={styles.picker}
-                    onValueChange={(itemValue, itemIndex) =>
-                        setStatutmatrimonial(itemValue)
-                    }>
-                    <Picker.Item label="Célibataire" value="Célibataire" />
-                    <Picker.Item label="Marié" value="Marié" />
-                    <Picker.Item label="Divorcé(e)" value="Divorcé(e)" />
-                    <Picker.Item label="Veuf(ve)" value="Veuf(ve)" />
-                    <Picker.Item label="Non précisée" value="non" />
-                </Picker>
+                <Dropdown
+                    value={'Cliquez ici...'}
+                    containerStyle={styles.dropdowncontainer}
+                    style={styles.dropdown}
+                    data={statutchoices}
+                    selectedItem={sexe}
+                    onChangeText={value => setStatutmatrimonial(value)}
+                    baseColor='#ecf0f1'
+                />
 
-                {Statutmatrimonial == 'non' ?
+                {Statutmatrimonial == 'Non précisée' ?
                     <TextInput placeholder="Précisez..."
                         style={styles.textInput}
                         value={autreStatutmatrimonial}
@@ -88,8 +87,8 @@ export default function Section1() {
                 <TextInput
                     style={styles.textInput}
                     placeholder="Écrivez ici..."
-                    value={autreStatutmatrimonial}
-                    onChangeText={text => setautreStatutmatrimonial(text)}
+                    value={NbEnfants}
+                    onChangeText={value => setNbEnfants(value)}
                     placeholderTextColor={'#d3d0d2'}
                     keyboardType='numeric'
                 />
@@ -105,6 +104,15 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
     },
+    dropdowncontainer: {
+        width: 200,
+        alignSelf: "center",
+        marginTop: -15,
+        marginBottom: 15,
+    },
+    dropdown: {
+        color: '#ecf0f1',
+    },
     zone: {
         borderWidth: 1,
         borderRadius: 20,
@@ -118,15 +126,8 @@ const styles = StyleSheet.create({
         alignSelf: "flex-start",
         marginTop: 5,
         marginBottom: 5,
-        marginLeft: 20,
+        marginLeft: 25,
         color: '#ecf0f1',
-    },
-    picker: {
-        width: 180,
-        marginBottom: 5,
-        marginLeft: 38,
-        color: '#ecf0f1',
-        alignSelf: "center"
     },
     datepicker: {
         width: 250,
@@ -134,14 +135,14 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     textInput: {
-        width: 180,
+        width: 200,
         height: 40,
         fontSize: 16,
         color: '#ecf0f1',
         alignSelf: "center",
         marginTop: 5,
         marginBottom: 30,
-        borderBottomWidth: 1,
+        borderBottomWidth: 0.5,
         borderBottomColor: '#d3d0d2',
     },
 });
